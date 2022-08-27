@@ -3,7 +3,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/',function (){
-   return 'admin';
+   return view('admin.master');
 });
 
 Route::get('/users',function (){
