@@ -17,6 +17,8 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->boolean('is_superuser')->default(0);
+            $table->boolean('is_staff')->default(0);
             $table->timestamp('email_verified_at')->nullable();
             $table->enum('two_factor_type',['off','sms']);
             $table->string('phone_number')->nullable();

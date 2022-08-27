@@ -24,7 +24,9 @@ class User extends Authenticatable
         'email',
         'password',
         'two_factor_type',
-        'phone_number'
+        'phone_number',
+        'is_superuser',
+        'is_staff',
     ];
 
     /**
@@ -63,5 +65,15 @@ class User extends Authenticatable
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new ResetPasswordNotification($token));
+    }
+
+    public function isSuperUser()
+    {
+        return $this->is_superuser;
+    }
+
+    public function isStaffUser()
+    {
+        return $this->is_staff;
     }
 }
