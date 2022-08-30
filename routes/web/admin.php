@@ -6,5 +6,5 @@ Route::get('/',function (){
    return view('admin.index');
 });
 
-Route::resource('users',\App\Http\Controllers\Admin\UserController::class);
+Route::resource('users',\App\Http\Controllers\Admin\UserController::class)->parameters(['users'=>'id']);
 

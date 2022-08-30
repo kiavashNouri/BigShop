@@ -66,6 +66,10 @@ class User extends Authenticatable
     {
         $this->notify(new ResetPasswordNotification($token));
     }
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = bcrypt($value);
+    }
 
     public function isSuperUser()
     {

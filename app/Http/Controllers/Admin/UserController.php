@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -60,27 +61,38 @@ class UserController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($id)
     {
-        //
+        $user=User::findOrFail($id);
+
+        return view('admin.users.edit' , compact('user'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        //
+        $user=User::findOrFail($id);
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
+        ]);
+
+        if(! is_null($request->password)) {
+            $request->validate([
+                'password' => ['required', 'string', 'min:8', 'confirmed'],
+            ]);
+
+            $data['password'] = $request->password;
+        }
+
+        $user->update($data);
+
+        if($request->has('verify')) {
+            $user->markEmailAsVerified();
+        }
+
+        alert()->success('مطلب مورد نظر شما با موفقیت ویرایش شد');
+        return redirect(route('admin.users.index'));
     }
 
     /**
