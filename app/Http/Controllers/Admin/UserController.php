@@ -14,6 +14,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::query();
+//        میخوایم یک query جدبد استفاده کنم که به شکل زیره
 
         if($keyword = request('search')) {
             $users->where('email' , 'LIKE' , "%{$keyword}%")->orWhere('name' , 'LIKE' , "%{$keyword}%" )->orWhere('id' , $keyword);
