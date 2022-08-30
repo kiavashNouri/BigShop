@@ -84,6 +84,7 @@
 <script src="/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
 <script src="/plugins/fastclick/fastclick.js"></script>
-<script src="{{asset('js/admin.js')}}"></script>
+<script src="{{asset('js/admin.js ')}}"></script>
+@include('sweet::alert')
 </body>
 </html>

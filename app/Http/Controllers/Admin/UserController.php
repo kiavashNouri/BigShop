@@ -95,14 +95,11 @@ class UserController extends Controller
         return redirect(route('admin.users.index'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
-        //
+        User::destroy($id);
+        alert()->success('کاربر با موفقیت حذف شد');
+        return back();
     }
 }
