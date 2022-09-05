@@ -10,11 +10,11 @@ use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('can:edit-user,user')->only(['edit']);
-
-    }
+//    public function __construct()
+//    {
+//        $this->middleware('can:edit,user')->only(['edit']);
+//
+//    }
 
     public function index()
     {
