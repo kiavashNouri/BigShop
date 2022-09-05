@@ -10,9 +10,15 @@ use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:edit-user,user')->only(['edit']);
+
+    }
 
     public function index()
     {
+
         $users = User::query();
 //        میخوایم یک query جدبد استفاده کنم که به شکل زیره
 

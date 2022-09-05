@@ -30,7 +30,8 @@ class ActiveCode extends Notification
      */
     public function via($notifiable)
     {
-        return [\GhasedakChannel::class];
+
+//        return [\GhasedakChannel::class];
     }
 
 }

@@ -25,7 +25,8 @@ class ProfileController extends Controller
 ////            باید حتما type برابر با sms , off باشه که حتی توی inspect هم دستی تغییر ندن
             'type' => 'required|in:sms,off',
 ////            اگر type off بود،اعتبار سنجی نکن
-            'phone' =>['required_unless:type,off',Rule::unique('users,phone_number')->ignore($request->user()->id)]
+            'phone' =>['required_unless:type,off']
+//            Rule::unique('users,phone_number')->ignore($request->user()->id)  //برای پارامتر دوم phone
             // این unique:users,phone_number برای اینه که کاربر اگر در اکانت دیگه شماره تلفن اکانت دیگش رو گذاشت،بگه که باید شماره جدید بذاره میتونیم نذاریمش
 
             //این Rule::unique('users,phone_number')->ignore($request->user()->id) باعث میشه که زمانی که کاربر کنونی که آنلاینه
