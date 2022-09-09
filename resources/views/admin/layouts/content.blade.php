@@ -25,3 +25,6 @@
     </section>
     <!-- /.content -->
 @endsection
+@section('script')
+    {{ $script ?? '' }}
+@endsection

@@ -19,12 +19,8 @@ Route::get('/', function () {
 //       'code' =>111111,
 //        'expired_at'=>now()->addMinute(10)
 //    ]);
-    if (\Illuminate\Support\Facades\Gate::allows('edit')){
         return view('welcome');
-    }else{
-        return 'ok';
 
-    }
 });
 
 Auth::routes();
