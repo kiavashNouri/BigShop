@@ -25,13 +25,10 @@ class PermissionController extends Controller
 
     public function store(Request $request,User $user)
     {
-        $data = $request->validate([
-            'permissions' => ['required', 'array'],
-            'roles' => ['required', 'array'],
-        ]);
 
-        $user->permissions()->sync($data['permissions']);
-        $user->roles()->sync($data['roles']);
+
+        $user->permissions()->sync($request->permissions);
+        $user->roles()->sync($request->roles);
 
         alert()->success('مطلب مورد نظر شما با موفقیت ثبت شد');
         return redirect(route('admin.users.index'));

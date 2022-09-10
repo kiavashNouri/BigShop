@@ -10,11 +10,14 @@ use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
-//    public function __construct()
-//    {
-//        $this->middleware('can:edit,user')->only(['edit']);
-//
-//    }
+    public function __construct()
+    {
+        $this->middleware('can:show-users')->only(['index']);
+        $this->middleware('can:create-user')->only(['create' , 'store']);
+        $this->middleware('can:edit-user')->only(['edit' , 'update']);
+        $this->middleware('can:delete-user')->only(['destroy']);
+
+    }
 
     public function index()
     {
@@ -25,8 +28,8 @@ class UserController extends Controller
         if($keyword = request('search')) {
             $users->where('email' , 'LIKE' , "%{$keyword}%")->orWhere('name' , 'LIKE' , "%{$keyword}%" )->orWhere('id' , $keyword);
         }
-
         if(\request('admin')) {
+            $this->authorize('show-staff-users');
             $users->where('is_superuser' , 1)->orWhere('is_staff' , 1);
         }
 
