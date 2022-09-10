@@ -21,7 +21,9 @@
                             </div>
                         </form>
                         <div class="btn-group-sm mr-1">
-                            <a href="{{ route('admin.permissions.create') }}" class="btn btn-info">ایجاد دسترسی جدید</a>
+                            @can('create-permission')
+                                <a href="{{ route('admin.permissions.create') }}" class="btn btn-info">ایجاد دسترسی جدید</a>
+                            @endcan
                         </div>
                     </div>
                 </div>
@@ -40,12 +42,16 @@
                                     <td>{{ $permission->name }}</td>
                                     <td>{{ $permission->label }}</td>
                                     <td class="d-flex">
+                                        @can('delete-permission')
                                         <form action="{{ route('admin.permissions.destroy' ,  $permission->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-sm btn-danger ml-1">حذف</button>
                                         </form>
+                                        @endcan
+                                        @can('edit-permission')
                                         <a href="{{ route('admin.permissions.edit' ,$permission->id) }}" class="btn btn-sm btn-primary">ویرایش</a>
+                                            @endcan
                                     </td>
                                 </tr>
                             @endforeach

@@ -5,9 +5,17 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class RoleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:show-roles')->only(['index']);
+        $this->middleware('can:create-role')->only(['create' , 'store']);
+        $this->middleware('can:edit-role')->only(['edit' , 'update']);
+        $this->middleware('can:delete-role')->only(['destroy']);
+    }
     public function index()
     {
         $roles = Role::query();

@@ -10,6 +10,13 @@ use Illuminate\Validation\Rule;
 class PermissionController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('can:show-permissions')->only(['index']);
+        $this->middleware('can:create-permission')->only(['create' , 'store']);
+        $this->middleware('can:edit-permission')->only(['edit' , 'update']);
+        $this->middleware('can:delete-permission')->only(['destroy']);
+    }
     public function index()
     {
         $permissions = Permission::query();
