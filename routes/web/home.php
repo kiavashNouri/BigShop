@@ -44,3 +44,6 @@ Route::middleware('auth')->group(function (){
     Route::post('profile/two-factor/phone',[ProfileController::class,'postPhoneVerify'])->name('profile.2fa.phone');
 });
 
+Route::get('products',[\App\Http\Controllers\ProductController::class,'index']);
+Route::get('products/{product}',[\App\Http\Controllers\ProductController::class]);
+
