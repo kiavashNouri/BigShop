@@ -45,5 +45,5 @@ Route::middleware('auth')->group(function (){
 });
 
 Route::get('products',[\App\Http\Controllers\ProductController::class,'index']);
-Route::get('products/{product}',[\App\Http\Controllers\ProductController::class]);
+Route::get('products/{product}',[\App\Http\Controllers\ProductController::class,'single']);
 
