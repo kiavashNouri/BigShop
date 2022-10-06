@@ -13,3 +13,5 @@ Route::resource('permissions',\App\Http\Controllers\Admin\PermissionController::
 Route::resource('roles',\App\Http\Controllers\Admin\RoleController::class);
 
 Route::resource('products',\App\Http\Controllers\Admin\ProductController::class);
+Route::get('comment/unapproved',[\App\Http\Controllers\Admin\CommentController::class,'unapproved'])->name('comments.unapproved');
+Route::resource('comments',\App\Http\Controllers\Admin\CommentController::class);
