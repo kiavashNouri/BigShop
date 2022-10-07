@@ -64,7 +64,7 @@
                     <form action="{{ route('send.comment') }}" method="post" id="sendCommentForm">
                         @csrf
                         <div class="modal-body">
-                            <input type="hidden" name="commentable_id" value="{{ $product->id }}" >
+                            <input type="hidden" name="commentable_id" value="{{ $product->id }}">
                             <input type="hidden" name="commentable_type" value="{{ get_class($product) }}">
                             <input type="hidden" name="parent_id" value="0">
 
@@ -92,6 +92,12 @@
                     </div>
 
                     <div class="card-body">
+                        @if($product->categories)
+                            @foreach($product->categories as $cat)
+                                <a href="#">{{$cat->name}}</a>
+                            @endforeach
+                        @endif
+                        <br>
                         {{ $product->description }}
                     </div>
                 </div>
