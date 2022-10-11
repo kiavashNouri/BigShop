@@ -16,3 +16,6 @@ Route::resource('products',\App\Http\Controllers\Admin\ProductController::class)
 Route::get('comment/unapproved',[\App\Http\Controllers\Admin\CommentController::class,'unapproved'])->name('comments.unapproved');
 Route::resource('comments',\App\Http\Controllers\Admin\CommentController::class);
 Route::resource('categories',\App\Http\Controllers\Admin\CategoryController::class);
+
+
+Route::post('attribute/values',[\App\Http\Controllers\Admin\AttributeController::class,'getValues']);
