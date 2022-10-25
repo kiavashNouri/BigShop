@@ -48,3 +48,13 @@ Route::middleware('auth')->group(function (){
 Route::get('products',[\App\Http\Controllers\ProductController::class,'index']);
 Route::get('products/{product}',[\App\Http\Controllers\ProductController::class,'single']);
 Route::post('comments',[\App\Http\Controllers\HomeController::class,'comment'])->name('send.comment');
+//Route::get('cart' , function() {
+//    dd(Cart::get('2'));
+//
+////    return view('home.cart');
+//});
+Route::post('cart/add/{product}',[\App\Http\Controllers\CartController::class,'addToCart'])->name('cart.add');
+Route::get('cart' , function() {
+    dd(Cart::get('2'));
+    return view('home.cart');
+});

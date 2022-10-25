@@ -37,6 +37,7 @@ class ProfileController extends Controller
 
         if ($data['type'] === 'sms') {
             if ($request->user()->phone_number !== $data['phone']) {
+//                یعنی اگه وجود نداشت
                 $code = ActiveCode::generateCode(Auth::user());
 
 //                send code with notif(maybe sms or email or both of them)

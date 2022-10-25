@@ -16,6 +16,7 @@ trait TwoFactorAuthenticate
             auth()->logout();
             $request->session()->flash('auth',[
                 'user_id' => $user->id,
+//                میتونه به غیر از sms هم باشه روش ارسالمون
                 'using_sms'=>false,
                 'remember'=>$request->has('remember')  //name of remember field(checkbox) in login form
             ]);

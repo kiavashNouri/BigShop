@@ -42,9 +42,11 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+//    متود زیر زمانی که کامل لاگین شد اجرا میشه
     protected function authenticated(\Illuminate\Http\Request $request, $user)
     {
         //used TwoFactorAuthenticate trait at class   <=================
+
 
         return $this->loggedin($request,$user);
     }
