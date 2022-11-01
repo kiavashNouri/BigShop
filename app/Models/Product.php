@@ -20,6 +20,12 @@ class Product extends Model
 
     public function attributes()
     {
-        return $this->belongsToMany(Attribute::class)->withPivot(['value_id']);
+
+//        میخوام از product به attr و از attr به attr value برسم
+//        جدول واسط بین product و attr هست که با withPivot میگیم که یک فیلد اضافه هم به ما نشون بده(value_id)
+
+//        این using باعث میشه به کلاسی که گفتیم از pivot بیا extend کن وصل بشه
+        return $this->belongsToMany(Attribute::class)->using(ProductAttributeValues::class)->withPivot(['value_id']);
     }
 }
+
