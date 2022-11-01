@@ -13,17 +13,23 @@ class CartController extends Controller
     {
         return view('home.cart');
     }
+    public function cart2()
+    {
+        return view('home.cart2');
+    }
+
 
     public function addToCart(Product $product)
     {
-        if( Cart::has($product) ) {
-            if(Cart::count($product) < $product->inventory)
-                Cart::update($product , 1);
+        $cart = Cart::instance('kia');
+
+        if( $cart->has($product) ) {
+            if($cart->count($product) < $product->inventory)
+                $cart->update($product , 1);
         }else {
-            Cart::put(
+            $cart->put(
                 [
                     'quantity' => 1,
-                    'price' => $product->price
                 ],
                 $product
             );
@@ -37,11 +43,13 @@ class CartController extends Controller
         $data = $request->validate([
             'quantity' => 'required',
             'id' => 'required',
-//           'cart' => 'required'
+            'cart' => 'required'
         ]);
 
-        if( Cart::has($data['id']) ) {
-            Cart::update($data['id'] , [
+        $cart = Cart::instance($data['cart']);
+
+        if( $cart->has($data['id']) ) {
+            $cart->update($data['id'] , [
                 'quantity' => $data['quantity']
             ]);
 

@@ -54,9 +54,7 @@ Route::post('comments',[\App\Http\Controllers\HomeController::class,'comment'])-
 ////    return view('home.cart');
 //});
 Route::post('cart/add/{product}',[\App\Http\Controllers\CartController::class,'addToCart'])->name('cart.add');
-Route::get('cart' , function() {
-//    dd(Cart::get('2'));
-    return view('home.cart');
-});
+Route::get('cart',[\App\Http\Controllers\CartController::class,'cart']);
+Route::get('cart2',[\App\Http\Controllers\CartController::class,'cart2']);
 Route::patch('cart/quantity/change' , [\App\Http\Controllers\CartController::class,'quantityChange']);
 Route::delete('cart/delete/{cart}',[\App\Http\Controllers\CartController::class,'deleteFromCart'])->name('cart.destroy');

@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static Collection all();
  * @method static array get($id);
  * @method static Cart put(array $value , Model $obj = null)
+ * @method static Cart instance(string $name)
  */
 class Cart extends Facade
 {

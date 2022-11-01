@@ -52,43 +52,43 @@
                         </thead>
                         <tbody>
 
-                        @foreach(\Cart::all() as $cart)
+                        @foreach(\Cart::instance('kia')->all() as $cart)
                             @if(isset($cart['product']))
                                 @php
                                     $product = $cart['product'];
                                 @endphp
                                 <tr>
-                                    <td class="p-4">
-                                        <div class="media align-items-center">
-                                            <div class="media-body">
-                                                <a href="#" class="d-block text-dark">{{ $product->title }}</a>
-                                                @if($product->attributes)
-                                                    <small>
-                                                        @foreach($product->attributes->take(3) as $attr)
-                                                            <span class="text-muted">{{ $attr->name }}: </span> {{ $attr->pivot->value->value }}
-                                                        @endforeach
-                                                    </small>
-                                                @endif
-                                            </div>
+                                <td class="p-4">
+                                    <div class="media align-items-center">
+                                        <div class="media-body">
+                                            <a href="#" class="d-block text-dark">{{ $product->title }}</a>
+                                            @if($product->attributes)
+                                                <small>
+                                                    @foreach($product->attributes->take(3) as $attr)
+                                                        <span class="text-muted">{{ $attr->name }}: </span> {{ $attr->pivot->value->value }}
+                                                    @endforeach
+                                                </small>
+                                            @endif
                                         </div>
-                                    </td>
-                                    <td class="text-right font-weight-semibold align-middle p-4">{{ $product->price }} تومان</td>
-                                    <td class="align-middle p-4">
-                                        <select onchange="changeQuantity(event, '{{ $cart['id'] }}')" class="form-control text-center">
-                                            @foreach(range(1 , $product->inventory) as $item)
-                                                <option value="{{ $item }}" {{  $cart['quantity'] == $item ? 'selected' : '' }}>{{ $item }}</option>
-                                            @endforeach
-                                        </select>
-                                    </td>
-                                    <td class="text-right font-weight-semibold align-middle p-4">تومان {{ $product->price * $cart['quantity'] }}</td>
-                                    <td class="text-center align-middle px-0">
-                                        <form action="{{ route('cart.destroy' , $cart['id']) }}" id="delete-cart-{{ $product->id }}" method="post">
-                                            @csrf
-                                            @method('delete')
-                                        </form>
-                                        <a href="#" onclick="event.preventDefault();document.getElementById('delete-cart-{{ $product->id }}').submit()" class="shop-tooltip close float-none text-danger">×</a>
-                                    </td>
-                                </tr>
+                                    </div>
+                                </td>
+                                <td class="text-right font-weight-semibold align-middle p-4">{{ $product->price }} تومان</td>
+                                <td class="align-middle p-4">
+                                    <select onchange="changeQuantity(event, '{{ $cart['id'] }}' , 'kia')" class="form-control text-center">
+                                        @foreach(range(1 , $product->inventory) as $item)
+                                            <option value="{{ $item }}" {{  $cart['quantity'] == $item ? 'selected' : '' }}>{{ $item }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td class="text-right font-weight-semibold align-middle p-4">تومان {{ $product->price * $cart['quantity'] }}</td>
+                                <td class="text-center align-middle px-0">
+                                    <form action="{{ route('cart.destroy' , $cart['id']) }}" id="delete-cart-{{ $product->id }}" method="post">
+                                        @csrf
+                                        @method('delete')
+                                    </form>
+                                    <a href="#" onclick="event.preventDefault();document.getElementById('delete-cart-{{ $product->id }}').submit()" class="shop-tooltip close float-none text-danger">×</a>
+                                </td>
+                            </tr>
                             @endif
                         @endforeach
 
@@ -99,10 +99,10 @@
                 <div class="d-flex flex-wrap justify-content-between align-items-center pb-4">
                     <div class="mt-4"></div>
                     <div class="d-flex">
-                        {{--                        <div class="text-right mt-4 mr-5">--}}
-                        {{--                            <label class="text-muted font-weight-normal m-0">Discount</label>--}}
-                        {{--                            <div class="text-large"><strong>$20</strong></div>--}}
-                        {{--                        </div>--}}
+{{--                        <div class="text-right mt-4 mr-5">--}}
+{{--                            <label class="text-muted font-weight-normal m-0">Discount</label>--}}
+{{--                            <div class="text-large"><strong>$20</strong></div>--}}
+{{--                        </div>--}}
                         <div class="text-right mt-4">
                             <label class="text-muted font-weight-normal m-0">قیمت کل</label>
 
