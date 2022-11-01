@@ -52,7 +52,7 @@
                         </thead>
                         <tbody>
 
-                        @foreach(\Cart::all() as $cart)
+                        @foreach(\Cart::instance('kia-cart')->all() as $cart)
                             @if(isset($cart['product']))
                                 @php
                                     $product = $cart['product'];
@@ -74,7 +74,7 @@
                                     </td>
                                     <td class="text-right font-weight-semibold align-middle p-4">{{ $product->price }} تومان</td>
                                     <td class="align-middle p-4">
-                                        <select onchange="changeQuantity(event, '{{ $cart['id'] }}')" class="form-control text-center">
+                                        <select onchange="changeQuantity(event, '{{ $cart['id'] }}' , 'kia-cart')" class="form-control text-center">
                                             @foreach(range(1 , $product->inventory) as $item)
                                                 <option value="{{ $item }}" {{  $cart['quantity'] == $item ? 'selected' : '' }}>{{ $item }}</option>
                                             @endforeach
@@ -117,7 +117,10 @@
                 </div>
 
                 <div class="float-left">
-                    <button type="button" class="btn btn-lg btn-primary mt-2">پرداخت</button>
+                    <form action="{{ route('cart.payment') }}" method="post" id="cart-payment">
+                        @csrf
+                    </form>
+                    <button onclick="document.getElementById('cart-payment').submit()" type="button" class="btn btn-lg btn-primary mt-2">پرداخت</button>
                 </div>
 
             </div>

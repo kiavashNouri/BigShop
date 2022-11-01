@@ -21,7 +21,7 @@ class CartController extends Controller
 
     public function addToCart(Product $product)
     {
-        $cart = Cart::instance('kia');
+        $cart = Cart::instance('kia-cart');
 
         if( $cart->has($product) ) {
             if($cart->count($product) < $product->inventory)
@@ -62,7 +62,6 @@ class CartController extends Controller
     public function deleteFromCart($id)
     {
         Cart::delete($id);
-
         return back();
     }
 }

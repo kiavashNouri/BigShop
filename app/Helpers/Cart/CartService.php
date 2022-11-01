@@ -5,16 +5,19 @@ namespace App\Helpers\Cart;
 
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Str;
 
 class CartService
 {
     protected $cart;
-    protected $name='default';
+    protected $name = 'default';
 
     public function __construct()
     {
-        $this->cart = session()->get($this->name) ?? collect([]);
+//        $this->cart = session()->get($this->name) ?? collect([]);
+        $this->cart = collect(json_decode(Request::cookie($this->name) , true)) ?? collect([]);
     }
 
     public function put(array $value , $obj = null)
@@ -36,7 +39,8 @@ class CartService
         $this->cart->put($value['id'] , $value);
 //                dd($this->cart);
 //        اینجا آیتمای کارت نباید relation داشته باشن(subject_id,subject_type حذف میشن) چون متود all خودش با relation میده(این نکته برای update بود)
-        session()->put($this->name , $this->cart);
+//        session()->put($this->name , $this->cart);
+        Cookie::queue($this->name , $this->cart->toJson() , 60 * 24 * 7 );
 
         return $this;
     }
@@ -62,16 +66,17 @@ class CartService
 
     public function delete($key)
     {
-        if( $this->has($key) ) {
+//        dd($this->name);
+        if( $this->instance('kia-cart')->has($key) ) {
             $this->cart = $this->cart->filter(function ($item) use ($key) {
                 if($key instanceof Model) {
                     return ( $item['subject_id'] != $key->id ) && ( $item['subject_type'] != get_class($key) );
                 }
-
                 return $key != $item['id'];
             });
 
-            session()->put($this->name , $this->cart);
+//            session()->put($this->name , $this->cart);
+            Cookie::queue($this->name , $this->cart->toJson() , 60 * 24 * 7 );
 
             return true;
         }
@@ -90,10 +95,12 @@ class CartService
     public function has($key)
     {
         if($key instanceof Model) {
+
             return ! is_null(
                 $this->cart->where('subject_id' , $key->id)->where('subject_type' , get_class($key))->first()
             );
         }
+//        dd($this->cart->firstWhere('id' , $key));
 
         return ! is_null(
             $this->cart->firstWhere('id' , $key)
@@ -114,7 +121,6 @@ class CartService
     public function all()
     {
         $cart = $this->cart;
-//        dd($cart);
         $cart = $cart->map(function($item) {
             return $this->withRelationshipIfExist($item);
         });
@@ -141,7 +147,8 @@ class CartService
 
     public function instance(string $name)
     {
-        $this->cart = session()->get($name) ?? collect([]);
+//        dd($name);
+        $this->cart = collect(json_decode(request()->cookie($name) , true)) ?? collect([]);
         $this->name = $name;
         return $this;
     }
