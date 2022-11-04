@@ -27,5 +27,11 @@ class Product extends Model
 //        این using باعث میشه به کلاسی که گفتیم از pivot بیا extend کن وصل بشه
         return $this->belongsToMany(Attribute::class)->using(ProductAttributeValues::class)->withPivot(['value_id']);
     }
+
+    public function orders()
+    {
+//        این محصول میتونه توسط چند نفر خریداری بشه
+        return $this->belongsToMany(Order::class);
+    }
 }
 
