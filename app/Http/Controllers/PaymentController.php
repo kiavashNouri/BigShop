@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Cart\Cart;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -32,7 +33,7 @@ class PaymentController extends Controller
             $order->products()->attach($orderItems);
 
 
-            $token = "dFd3p3izFFts_NasHcp29_a-0s7hezLwrUKXFQye7l4";
+            $token = "O0F8s_4O7cMyTrs4-cqpd3qDWxsgXGndzwfKtLGXHBA";
             $res_number=Str::random();
             $args = [
                 "amount" => 1000,
@@ -51,23 +52,55 @@ class PaymentController extends Controller
             }
 //echo $payment->getPayUrl();
             $order->payments()->create([
-                'renumber' => $res_number,
+                'resnumber' => $res_number,
                 'price'=>$price
             ]);
 
             $cart->flush();
 
-            header('Location: ' . $payment->getPayUrl());
+//            مکان پرداخت کردن
+            return redirect($payment->getPayUrl());
 
-            return 'ok';
         }
 
         // alert()->error();
         return back();
     }
 
-    public function callback()
+    public function callback(Request $request)
     {
+//       شماره فاکتوری که ثبت شده باید با شماره فاکتوری که توی payping ثبت کردیم برابر باشه تا پرداخت fake نباشه
+        $payment = Payment::where('resnumber', $request->clientrefid)->firstOrFail();
 
+//        $token = "config('services.payping.token')";
+        $token ="O0F8s_4O7cMyTrs4-cqpd3qDWxsgXGndzwfKtLGXHBA";
+
+        $payping = new \PayPing\Payment($token);
+
+        try {
+            // $payment->price
+            if($payping->verify($request->refid, 1000)){
+                $payment->update([
+                    'status' => 1
+                ]);
+
+                $payment->order()->update([
+                    'status' => 'paid'
+                ]);
+
+                alert()->success('پرداخت شما موفق بود');
+                return redirect('/products');
+            }else{
+                alert()->error('پرداخت شما تایید نشد');
+                return redirect('/products');
+            }
+        } catch (\Exception $e) {
+//            لغو شدن تراکنش توسط خود شخص
+            $errors = collect(json_decode($e->getMessage() , true));
+
+            alert()->error($errors->first());
+            return redirect('/products');
+        }
     }
+
 }
