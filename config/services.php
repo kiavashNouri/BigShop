@@ -36,4 +36,6 @@ return [
         'redirect' => env('GOOGLE_CALLBACK_URL'),
     ],
 
+    'payping' =>env('PAYPING_TOKEN')
+
 ];

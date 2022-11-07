@@ -152,4 +152,12 @@ class CartService
         $this->name = $name;
         return $this;
     }
+
+    public function flush()
+    {
+       $this->cart=collect([]);
+        Cookie::queue($this->name , $this->cart->toJson() , 60 * 24 * 7 );
+        return $this;
+
+    }
 }

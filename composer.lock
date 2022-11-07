@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "565ccd928041fa031f2dc7985042dfb6",
+    "content-hash": "4dfd4fe85d764df278129d3cff43b44a",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -559,6 +559,62 @@
                 }
             ],
             "time": "2020-12-29T14:50:06+00:00"
+        },
+        {
+            "name": "flotfeali/payping-client",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/payping/payping-php-client.git",
+                "reference": "634a5422a52474f90a475a86dbe5d23430df74ac"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/payping/payping-php-client/zipball/634a5422a52474f90a475a86dbe5d23430df74ac",
+                "reference": "634a5422a52474f90a475a86dbe5d23430df74ac",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "ext-openssl": "*",
+                "guzzlehttp/guzzle": "^6.2|^7.0"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "PayPing\\Laravel\\PayPingServiceProvider"
+                    ],
+                    "aliases": {
+                        "Authorization": "PayPing\\Laravel\\Facade\\Authorization",
+                        "Payment": "PayPing\\Laravel\\Facade\\Payment"
+                    }
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/helper.php"
+                ],
+                "psr-4": {
+                    "PayPing\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "farhad lotfeali",
+                    "email": "flotfeali@gmail.com"
+                }
+            ],
+            "support": {
+                "issues": "https://github.com/payping/payping-php-client/issues",
+                "source": "https://github.com/payping/payping-php-client/tree/master"
+            },
+            "time": "2022-02-17T18:19:24+00:00"
         },
         {
             "name": "fruitcake/laravel-cors",
