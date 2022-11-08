@@ -38,7 +38,7 @@ Route::get('/secret',function (){
 
 
 Route::middleware('auth')->group(function (){
-    Route::get('/profile',[ProfileController::class,'index']);
+    Route::get('/profile',[ProfileController::class,'index'])->name('profile');
     Route::get('/profile/two-factor',[ProfileController::class,'manageTwoFactor'])->name('profile.2fa-manage');
     Route::post('/profile/two-factor',[ProfileController::class,'postManageTwoFactor'])->name('post.twoFactor-option');
     Route::get('profile/two-factor/phone',[ProfileController::class,'getPhoneVerify'])->name('show.phone.setting');
@@ -46,6 +46,9 @@ Route::middleware('auth')->group(function (){
     Route::post('comments',[\App\Http\Controllers\HomeController::class,'comment'])->name('send.comment');
     Route::post('payment',[\App\Http\Controllers\PaymentController::class,'payment'])->name('cart.payment');
     Route::get('payment/callback',[\App\Http\Controllers\PaymentController::class,'callback'])->name('payment.callback');
+    Route::get('orders',[\App\Http\Controllers\Profile\OrderController::class,'index'])->name('profile.orders');
+    Route::get('orders/{order}',[\App\Http\Controllers\Profile\OrderController::class,'showDetails'])->name('profile.orders.detail');
+    Route::get('orders/{order}/payment',[\App\Http\Controllers\Profile\OrderController::class,'payment'])->name('profile.orders.payment');
 });
 
 Route::get('products',[\App\Http\Controllers\ProductController::class,'index']);

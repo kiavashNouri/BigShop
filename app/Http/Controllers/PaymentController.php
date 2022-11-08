@@ -53,7 +53,6 @@ class PaymentController extends Controller
 //echo $payment->getPayUrl();
             $order->payments()->create([
                 'resnumber' => $res_number,
-                'price'=>$price
             ]);
 
             $cart->flush();
