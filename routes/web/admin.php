@@ -19,3 +19,5 @@ Route::resource('categories',\App\Http\Controllers\Admin\CategoryController::cla
 
 
 Route::post('attribute/values',[\App\Http\Controllers\Admin\AttributeController::class,'getValues']);
+Route::resource('orders',\App\Http\Controllers\Admin\OrderController::class);
+Route::get('orders/{order}/payments',[\App\Http\Controllers\Admin\OrderController::class,'payments'])->name('orders.payment');
