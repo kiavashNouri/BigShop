@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Attribute;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
@@ -14,12 +15,12 @@ class ProductController extends Controller
     {
         $products = Product::query();
 
-        if($keyword = request('search')) {
-            $products->where('title' , 'LIKE' , "%{$keyword}%")->orWhere('id' , 'LIKE' , "%{$keyword}%" );
+        if ($keyword = request('search')) {
+            $products->where('title', 'LIKE', "%{$keyword}%")->orWhere('id', 'LIKE', "%{$keyword}%");
         }
 
         $products = $products->latest()->paginate(20);
-        return view('admin.products.all' , compact('products'));
+        return view('admin.products.all', compact('products'));
     }
 
     public function create()
@@ -29,12 +30,42 @@ class ProductController extends Controller
     }
 
 
+//    public function store(Request $request)
+//    {
+//        $validData = $request->validate([
+//            'title' => 'required',
+//            'description' => 'required',
+//            'price' => 'required',
+//            'inventory' => 'required',
+//            'categories' => 'required',
+//            'attributes' => 'array'
+//        ]);
+//
+//        $file = $request->file('image');
+//        $destinationPath = '/images/' . now()->year . '/' . now()->month . '/' . now()->day . '/';
+//        $file->move(public_path($destinationPath), $file->getClientOriginalName());
+//
+//        $validData['image'] = $destinationPath . $file->getClientOriginalName();
+//
+//
+//        $product = auth()->user()->products()->create($validData);
+//        $product->categories()->sync($validData['categories']);
+//
+//        if (isset($validData['attributes']))
+//            $this->attachAttributesToProduct($product, $validData);
+//
+//        alert()->success('محصول مورد نظر با موفقیت ثبت شد', 'با تشکر');
+//        return redirect(route('admin.products.index'));
+//    }
+
+
     public function store(Request $request)
     {
         $validData = $request->validate([
             'title' => 'required',
             'description' => 'required',
             'price' => 'required',
+            'image' => 'required',
             'inventory' => 'required',
             'categories' => 'required',
             'attributes' => 'array'
@@ -42,11 +73,14 @@ class ProductController extends Controller
 
         $product = auth()->user()->products()->create($validData);
         $product->categories()->sync($validData['categories']);
-        $this->attachAttributesToProduct($product, $validData);
+
+        if(isset($validData['attributes']))
+            $this->attachAttributesToProduct($product, $validData);
 
         alert()->success('محصول مورد نظر با موفقیت ثبت شد' , 'با تشکر');
         return redirect(route('admin.products.index'));
     }
+
     public function edit(Product $product)
     {
 //        return $product->attributes[0]->pivot->value;
@@ -61,18 +95,19 @@ class ProductController extends Controller
             'description' => 'required',
             'price' => 'required',
             'inventory' => 'required',
+            'image' => 'required',
             'categories' => 'required',
             'attributes' => 'required'
         ]);
-
         $product->update($validData);
         $product->categories()->sync($validData['categories']);
 
         $product->attributes()->detach();
-        $this->attachAttributesToProduct($product, $validData);
+        if(isset($validData['attributes']))
+            $this->attachAttributesToProduct($product, $validData);
 
 
-        alert()->success('محصول مورد نظر با موفقیت ویرایش شد' , 'با تشکر');
+        alert()->success('محصول مورد نظر با موفقیت ویرایش شد', 'با تشکر');
         return redirect(route('admin.products.index'));
     }
 
