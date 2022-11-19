@@ -33,5 +33,10 @@ class Product extends Model
 //        این محصول میتونه توسط چند نفر خریداری بشه
         return $this->belongsToMany(Order::class);
     }
+
+    public function gallery()
+    {
+        return $this->hasMany(ProductGallery::class);
+    }
 }
 
