@@ -6,6 +6,8 @@
     @endslot
 
     @slot('script')
+
+        <script src="{{asset('/js/ckeditor/ckeditor.js')}}"></script>
         <script>
 
             document.addEventListener("DOMContentLoaded", function() {
@@ -107,7 +109,8 @@
 
                 $('.attribute-select').select2({tags: true});
             });
-        </script>
+
+            CKEDITOR.replace('description', {filebrowserImageBrowseUrl: '/file-manager/ckeditor'});        </script>
     @endslot
 
     <div class="row">
