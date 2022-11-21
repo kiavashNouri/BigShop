@@ -26,6 +26,7 @@ class ProductGalleryController extends Controller
 
     public function store(Request $request,Product $product)
     {
+
         $validated = $request->validate([
             'images.*.image' => 'required',
             'images.*.alt' => 'required|min:3'

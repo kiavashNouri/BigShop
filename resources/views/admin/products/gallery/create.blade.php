@@ -41,7 +41,6 @@
             $('#add_product_image').click(function() {
                 let imagesSection = $('#images_section');
                 let id = imagesSection.children().length;
-
                 imagesSection.append(
                     createNewPic({
                         id
@@ -63,6 +62,8 @@
             });
 
             // set file link
+
+            //این fmSetLink از توابع خود این فایل منیجر هست
             function fmSetLink($url) {
                 image.find('.image_label').first().val($url);
             }
