@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Discount\Providers;
+namespace Modules\AddUserDiscountTable\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -12,7 +12,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    protected $moduleNamespace = 'Modules\Discount\Http\Controllers';
+    protected $moduleNamespace = 'Modules\AddUserDiscountTable\Http\Controllers';
 
     /**
      * Called before routes are registered.
@@ -35,8 +35,6 @@ class RouteServiceProvider extends ServiceProvider
     {
         $this->mapApiRoutes();
 
-        $this->mapAdminRoutes();
-
         $this->mapWebRoutes();
     }
 
@@ -51,7 +49,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::middleware('web')
             ->namespace($this->moduleNamespace)
-            ->group(module_path('Discount', '/Routes/web.php'));
+            ->group(module_path('AddUserDiscountTable', '/Routes/web.php'));
     }
 
     /**
@@ -61,27 +59,11 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @return void
      */
-
-    protected function mapAdminRoutes()
-    {
-        Route::middleware(['web' , 'auth' , 'auth.admin'])
-            ->name('admin.')
-            ->prefix('admin')
-            ->group(module_path('Discount','/Routes/admin.php'));
-    }
-    /**
-     * Define the "api" routes for the application.
-     *
-     * These routes are typically stateless.
-     *
-     * @return void
-     */
-
     protected function mapApiRoutes()
     {
         Route::prefix('api')
             ->middleware('api')
             ->namespace($this->moduleNamespace)
-            ->group(module_path('Discount', '/Routes/api.php'));
+            ->group(module_path('AddUserDiscountTable', '/Routes/api.php'));
     }
 }

@@ -1,0 +1,13 @@
+{
+    "name": "AddUserDiscountTable",
+    "alias": "adduserdiscounttable",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\AddUserDiscountTable\\Providers\\AddUserDiscountTableServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
