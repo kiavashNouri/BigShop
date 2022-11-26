@@ -97,7 +97,17 @@
                 </div>
                 <!-- / Shopping cart table -->
                 <div class="d-flex flex-wrap justify-content-between align-items-center pb-4">
-                    <div class="mt-4"></div>
+                    <div class="mt-4">
+                        <form action="{{route('cart.discount.check')}}" method="post" class="mt-3">
+                            @csrf
+                            <input type="hidden" name="cart" value="kia-cart">
+                            <input type="text" class="form-control" name="discount" placeholder="کد تخفیف دارید؟">
+                            <button type="submit" class="btn btn-success mt-2">اعمال کد تخفیف</button>
+                            @error('discount')
+                            <p class="text-danger">{{$message}}</p>
+                            @enderror
+                        </form>
+                    </div>
                     <div class="d-flex">
                         {{--                        <div class="text-right mt-4 mr-5">--}}
                         {{--                            <label class="text-muted font-weight-normal m-0">Discount</label>--}}

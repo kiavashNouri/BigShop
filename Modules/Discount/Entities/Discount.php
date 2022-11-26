@@ -12,7 +12,7 @@ class Discount extends Model
 //    protected $fillable = [];
     protected $guarded=['id'];
 
-    public function product()
+    public function products()
     {
         return $this->belongsToMany(Product::class);
     }

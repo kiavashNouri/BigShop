@@ -21,9 +21,9 @@
                             </div>
                         </form>
                         <div class="btn-group-sm mr-1">
-{{--                            @can('create-product')--}}
-                                <a href="{{ route('admin.discount.create') }}" class="btn btn-info">ایجاد تخفیف جدید</a>
-{{--                            @endcan--}}
+                            {{--                            @can('create-product')--}}
+                            <a href="{{ route('admin.discount.create') }}" class="btn btn-info">ایجاد تخفیف جدید</a>
+                            {{--                            @endcan--}}
                         </div>
                     </div>
                 </div>
@@ -52,7 +52,7 @@
                                 <td>{{ $discount->categories->count() ?  $discount->categories->pluck('name')->join(', ') : 'همه دسته‌ها' }}</td>
                                 <td>{{ jdate($discount->expired_at)->ago() }}</td>
                                 <td class="d-flex">
-{{--                                    // permissions--}}
+                                    {{--                                    // permissions--}}
                                     <form action="{{ route('admin.discount.destroy' , $discount->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')

@@ -13,8 +13,14 @@ class AddUserDiscountTable extends Migration
      */
     public function up()
     {
-        Schema::table('', function (Blueprint $table) {
+        Schema::create('discount_user', function (Blueprint $table) {
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
+            $table->unsignedBigInteger('discount_id');
+            $table->foreign('discount_id')->references('id')->on('discounts')->onDelete('cascade');
+
+            $table->primary(['user_id' , 'discount_id']);
         });
     }
 
@@ -25,8 +31,6 @@ class AddUserDiscountTable extends Migration
      */
     public function down()
     {
-        Schema::table('', function (Blueprint $table) {
-
-        });
+        Schema::dropIfExists('discount_user');
     }
 }
