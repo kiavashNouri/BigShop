@@ -56,7 +56,7 @@
                         </thead>
                         <tbody>
 
-                        @foreach(\Cart::instance('kia-cart')->all() as $cart)
+                        @foreach(Cart::instance('kia-cart')->all() as $cart)
                             @if(isset($cart['product']))
                                 @php
                                     $product = $cart['product'];
@@ -146,7 +146,7 @@
                     @else
                         <form action="{{ route('cart.discount.check') }}" method="post" class="mt-4">
                             @csrf
-                            <input type="hidden" name="cart" value="cart-roocket">
+                            <input type="hidden" name="cart" value="kia-cart">
                             <input type="text" class="form-control" name="discount" placeholder="کد تخفیف دارید؟">
                             <button type="submit" class="mt-2 btn btn-success">اعمال تخفیف</button>
                             @if($errors->has('discount'))
@@ -161,8 +161,9 @@
                         {{--                        </div>--}}
                         <div class="text-right mt-4">
                             <label class="text-muted font-weight-normal m-0">قیمت کل</label>
-
+{{--                            @dd(Cart::all())--}}
                             @php
+
                                 $totalPrice = Cart::all()->sum(function($cart) {
                                     return $cart['discount_percent']==0
                                     ?$cart['product']->price * $cart['quantity']

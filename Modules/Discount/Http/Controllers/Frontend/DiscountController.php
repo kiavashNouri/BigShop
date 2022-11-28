@@ -19,7 +19,7 @@ class DiscountController extends Controller
 
         if( ! auth()->check() ) {
             return back()->withErrors([
-                 'discount' => 'برای اعمال کد تخفیف لطفا ابتدا وارد سایت شوید'
+                'discount' => 'برای اعمال کد تخفیف لطفا ابتدا وارد سایت شوید'
             ]);
         }
 
@@ -39,14 +39,10 @@ class DiscountController extends Controller
             }
         }
 
-
-
         $cart = Cart::instance($validated['cart']);
         $cart->addDiscount($discount->code);
 
         return back();
-
-
     }
 
     public function destroy(Request $request)
