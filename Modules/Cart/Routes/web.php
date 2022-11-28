@@ -11,7 +11,6 @@
 |
 */
 
-Route::prefix('discount')->group(function() {
-    Route::post('/check',[\Modules\Discount\Http\Controllers\Frontend\DiscountController::class,'check'])->name('cart.discount.check');
-    Route::delete('/delete',[\Modules\Discount\Http\Controllers\Frontend\DiscountController::class,'destroy']);
+Route::prefix('cart')->group(function() {
+    Route::get('/', 'CartController@index');
 });

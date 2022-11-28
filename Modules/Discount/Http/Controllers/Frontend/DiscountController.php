@@ -2,6 +2,7 @@
 
 namespace Modules\Discount\Http\Controllers\Frontend;
 
+use App\Helpers\Cart\Cart;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -39,6 +40,23 @@ class DiscountController extends Controller
         }
 
 
+
+        $cart = Cart::instance($validated['cart']);
+        $cart->addDiscount($discount->code);
+
+        return back();
+
+
+    }
+
+    public function destroy(Request $request)
+    {
+        $cart = Cart::instance($request->cart);
+        $cart->addDiscount(null);
+
+        // alert()->success();
+
+        return back();
     }
 
 }

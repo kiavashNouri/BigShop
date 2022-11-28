@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Str;
+use Modules\Discount\Entities\Discount;
 
 class CartService
 {
@@ -17,7 +18,11 @@ class CartService
     public function __construct()
     {
 //        $this->cart = session()->get($this->name) ?? collect([]);
-        $this->cart = collect(json_decode(Request::cookie($this->name) , true)) ?? collect([]);
+        $cart = collect(json_decode(Request::cookie($this->name) , true));
+        $this->cart=$cart->count()?$cart:collect([
+            'items'=>[],
+            'discount'=>null
+        ]);
     }
 
     public function put(array $value , $obj = null)
@@ -28,7 +33,8 @@ class CartService
             $value = array_merge($value , [
                 'id' => Str::random(10),
                 'subject_id' => $obj->id,
-                'subject_type' => get_class($obj)
+                'subject_type' => get_class($obj),
+                'discount_percent'=>0
             ]);
         } elseif(! isset($value['id'])) {
             $value = array_merge($value , [
@@ -36,7 +42,7 @@ class CartService
             ]);
         }
 
-        $this->cart->put($value['id'] , $value);
+        $this->cart['items']=collect($this->cart['items'])->put($value['id'] , $value);
 //                dd($this->cart);
 //        اینجا آیتمای کارت نباید relation داشته باشن(subject_id,subject_type حذف میشن) چون متود all خودش با relation میده(این نکته برای update بود)
 //        session()->put($this->name , $this->cart);
@@ -68,7 +74,7 @@ class CartService
     {
 //        dd($this->name);
         if( $this->instance('kia-cart')->has($key) ) {
-            $this->cart = $this->cart->filter(function ($item) use ($key) {
+            $this->cart['items'] = collect($this->cart['items'])->filter(function ($item) use ($key) {
                 if($key instanceof Model) {
                     return ( $item['subject_id'] != $key->id ) && ( $item['subject_type'] != get_class($key) );
                 }
@@ -97,7 +103,7 @@ class CartService
         if($key instanceof Model) {
 
             return ! is_null(
-                $this->cart->where('subject_id' , $key->id)->where('subject_type' , get_class($key))->first()
+                collect($this->cart['items'])->where('subject_id' , $key->id)->where('subject_type' , get_class($key))->first()
             );
         }
 //        dd($this->cart->firstWhere('id' , $key));
@@ -110,8 +116,8 @@ class CartService
     public function get($key , $withRelationShip = true)
     {
         $item = $key instanceof Model
-            ? $this->cart->where('subject_id' , $key->id)->where('subject_type' , get_class($key))->first()
-            : $this->cart->firstWhere('id' , $key);
+            ? collect($this->cart['items'])->where('subject_id' , $key->id)->where('subject_type' , get_class($key))->first()
+            : collect($this->cart['items'])->firstWhere('id' , $key);
 //        dd($this->withRelationshipIfExist($item));
 
         return $withRelationShip ? $this->withRelationshipIfExist($item) : $item;
@@ -121,8 +127,10 @@ class CartService
     public function all()
     {
         $cart = $this->cart;
-        $cart = $cart->map(function($item) {
-            return $this->withRelationshipIfExist($item);
+        $cart = collect($this->cart['items'])->map(function($item) use ($cart){
+            $item=$this->withRelationshipIfExist($item);
+            $item=$this->checkDiscountValidate($item,$cart['discount']);
+            return $item;
         });
         return $cart;
     }
@@ -148,16 +156,50 @@ class CartService
     public function instance(string $name)
     {
 //        dd($name);
-        $this->cart = collect(json_decode(request()->cookie($name) , true)) ?? collect([]);
+        $cart = collect(json_decode(request()->cookie($name) , true)) ?? collect([]);
+        $this->cart=$cart->count()?$cart:collect([
+            'items'=>[],
+            'discount'=>null
+        ]);
         $this->name = $name;
         return $this;
     }
 
     public function flush()
     {
-       $this->cart=collect([]);
+       $this->cart=collect([
+           'items'=>[],
+           'discount'=>null
+       ]);
         Cookie::queue($this->name , $this->cart->toJson() , 60 * 24 * 7 );
         return $this;
 
+    }
+
+    public function addDiscount($discount)
+    {
+        $this->cart['discount'] = $discount;
+        Cookie::queue($this->name, $this->cart->toJson(), 60 * 24 * 7);
+    }
+
+    protected function checkDiscountValidate($item, $discount)
+    {
+        $discount = Discount::where('code' , $discount)->first();
+        if($discount && $discount->expired_at > now() ) {
+            if(
+                (  ! $discount->products->count() && ! $discount->categories->count() ) ||
+                in_array( $item['product']->id , $discount->products->pluck('id')->toArray() ) ||
+                array_intersect($item['product']->categories->pluck('id')->toArray() , $discount->categories->pluck('id')->toArray())
+            ) {
+                $item['discount_percent'] = $discount->percent / 100;
+            }
+        }
+
+        return $item;
+    }
+
+    public function getDiscount()
+    {
+        return Discount::where('code' , $this->cart['discount'])->first();
     }
 }

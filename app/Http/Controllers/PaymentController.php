@@ -16,7 +16,9 @@ class PaymentController extends Controller
         $cartItems = $cart->all();
         if ($cartItems->count()) {
             $price = $cartItems->sum(function ($cart) {
-                return $cart['product']->price * $cart['quantity'];
+                return $cart['discount_percent']==0
+                    ?$cart['product']->price * $cart['quantity']
+                    :($cart['product']->price-($cart['product']->price*$cart['discount_percent']))*$cart['quantity'];
             });
 
             $orderItems = $cartItems->mapWithKeys(function ($cart) {

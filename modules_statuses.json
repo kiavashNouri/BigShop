@@ -1,5 +1,6 @@
 {
     "Discount": true,
     "Migration": true,
-    "AddUserDiscountTable": true
+    "AddUserDiscountTable": true,
+    "Cart": true
 }
