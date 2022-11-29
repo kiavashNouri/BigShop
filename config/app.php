@@ -175,7 +175,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        App\Helpers\Cart\CartServiceProvider::class,
+//        App\Helpers\Cart\CartServiceProvider::class,
 
     ],
 
@@ -232,7 +232,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Alert' => UxWeb\SweetAlert\SweetAlert::class,
-        'Cart'=>App\Helpers\Cart\Cart::class,
+//        'Cart'=>App\Helpers\Cart\Cart::class,
 
     ],
 

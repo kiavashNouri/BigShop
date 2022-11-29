@@ -4,6 +4,7 @@ namespace Modules\Cart\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
+use Modules\Cart\Helpers\CartService;
 
 class CartServiceProvider extends ServiceProvider
 {
@@ -38,6 +39,9 @@ class CartServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->register(RouteServiceProvider::class);
+        $this->app->singleton('cart' , function() {
+            return new CartService();
+        });
     }
 
     /**

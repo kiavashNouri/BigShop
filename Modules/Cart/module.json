@@ -7,7 +7,9 @@
     "providers": [
         "Modules\\Cart\\Providers\\CartServiceProvider"
     ],
-    "aliases": {},
+    "aliases": {
+        "Cart": "Modules\\Cart\\Helpers\\Cart"
+    },
     "files": [],
     "requires": []
 }

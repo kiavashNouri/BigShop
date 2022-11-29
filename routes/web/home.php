@@ -19,7 +19,7 @@ Route::get('/', function () {
 //       'code' =>111111,
 //        'expired_at'=>now()->addMinute(10)
 //    ]);
-    auth()->loginUsingId(7);
+    auth()->loginUsingId(1);
         return view('welcome');
 
 });
@@ -59,8 +59,3 @@ Route::get('products/{product}',[\App\Http\Controllers\ProductController::class,
 ////    return view('home.cart');
 //});
 
-Route::post('cart/add/{product}',[\App\Http\Controllers\CartController::class,'addToCart'])->name('cart.add');
-Route::get('cart',[\App\Http\Controllers\CartController::class,'cart']);
-Route::get('cart2',[\App\Http\Controllers\CartController::class,'cart2']);
-Route::patch('cart/quantity/change' , [\App\Http\Controllers\CartController::class,'quantityChange']);
-Route::delete('cart/delete/{cart}',[\App\Http\Controllers\CartController::class,'deleteFromCart'])->name('cart.destroy');
