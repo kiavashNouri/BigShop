@@ -1,7 +1,7 @@
 {
     "name": "Discount",
-    "alias": "discount",
-    "description": "",
+    "alias": "تخفیف",
+    "description": "مدیریت تخفیف",
     "keywords": [],
     "priority": 0,
     "providers": [

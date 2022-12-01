@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Discount\Providers;
+namespace Modules\Main\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -12,7 +12,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    protected $moduleNamespace = 'Modules\Discount\Http\Controllers';
+    protected $moduleNamespace = 'Modules\Main\Http\Controllers';
 
     /**
      * Called before routes are registered.
@@ -35,9 +35,9 @@ class RouteServiceProvider extends ServiceProvider
     {
         $this->mapApiRoutes();
 
-        $this->mapAdminRoutes();
-
         $this->mapWebRoutes();
+
+        $this->mapAdminRoutes();
     }
 
     /**
@@ -51,25 +51,19 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::middleware('web')
             ->namespace($this->moduleNamespace)
-            ->group(module_path('Discount', '/Routes/web.php'));
+            ->group(module_path('Main', '/Routes/web.php'));
     }
 
-    /**
-     * Define the "api" routes for the application.
-     *
-     * These routes are typically stateless.
-     *
-     * @return void
-     */
 
     protected function mapAdminRoutes()
     {
         Route::middleware(['web' , 'auth' , 'auth.admin'])
-//            ->namespace($this->moduleNamespace . '\Admin')
+            ->namespace($this->moduleNamespace . '\Admin')
             ->name('admin.')
             ->prefix('admin')
-            ->group(module_path('Discount','/Routes/admin.php'));
+            ->group(module_path('Main','/Routes/admin.php'));
     }
+
     /**
      * Define the "api" routes for the application.
      *
@@ -77,12 +71,11 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @return void
      */
-
     protected function mapApiRoutes()
     {
         Route::prefix('api')
             ->middleware('api')
             ->namespace($this->moduleNamespace)
-            ->group(module_path('Discount', '/Routes/api.php'));
+            ->group(module_path('Main', '/Routes/api.php'));
     }
 }

@@ -159,7 +159,11 @@
                             </li>
                         </ul>
                     </li>
-
+                    @foreach(Module::collections() as $module)
+                        @if(\Illuminate\Support\Facades\View::exists("{$module->getLowerName()}::admin.sidebar-item"))
+                            @include("{$module->getLowerName()}::admin.sidebar-item")
+                        @endif
+                    @endforeach
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->
