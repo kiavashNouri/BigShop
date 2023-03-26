@@ -32,6 +32,10 @@ class GoogleAuthController extends Controller
                     'password' => bcrypt(\Illuminate\Support\Str::random(16)),
                 ]);
             }
+
+            if (!$user->hasVerifiedEmail()) {
+                $user->markEmailAsVerified();
+            }
             Auth::loginUsingId($user->id);
 
 //            return redirect('/'); instead of redirect we use loggedin method from  TwoFactorAuthenticate trait for two factor auth

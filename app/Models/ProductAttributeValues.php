@@ -5,6 +5,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
+
+//باید extends کنه pivot رو
 class ProductAttributeValues extends Pivot
 {
 
@@ -20,6 +22,7 @@ class ProductAttributeValues extends Pivot
 
     public function value()
     {
+//        میگه value_id مربوط به AttributeValue میشه
         return $this->belongsTo(AttributeValue::class , 'value_id' , 'id');
     }
 }

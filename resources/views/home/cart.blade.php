@@ -57,6 +57,7 @@
                         <tbody>
 
                         @foreach(Cart::instance('kia-cart')->all() as $cart)
+
                             @if(isset($cart['product']))
                                 @php
                                     $product = $cart['product'];
@@ -134,6 +135,7 @@
                 <!-- / Shopping cart table -->
                 <div class="d-flex flex-wrap justify-content-between align-items-center pb-4">
                     @if($discount = Cart::getDiscount())
+
                         <div class="mt-4">
                             <form action="/discount/delete" method="post" id="delete-discount">
                                 @method('delete')
@@ -174,6 +176,7 @@
                         </div>
                     </div>
                 </div>
+
 
                 <div class="float-left">
                     <form action="{{ route('cart.payment') }}" method="post" id="cart-payment">

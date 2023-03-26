@@ -20,7 +20,7 @@
             <label for="type">Type</label>
             <select name="type" id="type" class="form-control">
                 @foreach(config('twofactor.types') as $key => $name)
-                    <option value="{{ $key }}" {{ old('type') == $key || auth()->user()->hasTwoFactor($key) ? 'selected' : '' }}>{{ $name }}</option>
+                    <option value="{{ $key }}" {{ old('type') == $key || auth()->user()->hasTwoFactorAuthenticationEnabled() ? 'selected' : '' }}>{{ $name }}</option>
                 @endforeach
             </select>
         </div>

@@ -10,7 +10,7 @@
         <script src="{{asset('/js/ckeditor/ckeditor.js')}}"></script>
         <script>
 
-            document.addEventListener("DOMContentLoaded", function() {
+            document.addEventListener("DOMContentLoaded", function () {
 
                 document.getElementById('button-image').addEventListener('click', (event) => {
                     event.preventDefault();
@@ -23,6 +23,7 @@
             function fmSetLink($url) {
                 document.getElementById('image_label').value = $url;
             }
+
             $('#categories').select2({
                 'placeholder': 'دسترسی مورد نظر را انتخاب کنید'
             })
@@ -65,14 +66,10 @@
                     <div class="row" id="attribute-${id}">
                         <div class="col-5">
                             <div class="form-group">
-                                 <label>عنوان ویژگی</label>
+                                 <label>عنوان ویژگی</la bel>
                                  <select name="attributes[${id}][name]" onchange="changeAttributeValues(event, ${id});" class="attribute-select form-control">
                                     <option value="">انتخاب کنید</option>
-                                    ${
-                    attributes.map(function (item) {
-                        return `<option value="${item}">${item}</option>`
-                    })
-                }
+                                    ${attributes.map(function (item) {return `<option value="${item}">${item}</option>`})}
                                  </select>
                             </div>
                         </div>
@@ -110,7 +107,9 @@
                 $('.attribute-select').select2({tags: true});
             });
 
-            CKEDITOR.replace('description', {filebrowserImageBrowseUrl: '/file-manager/ckeditor'});        </script>
+            CKEDITOR.replace('description', {filebrowserImageBrowseUrl: '/file-manager/ckeditor'});
+
+        </script>
     @endslot
 
     <div class="row">

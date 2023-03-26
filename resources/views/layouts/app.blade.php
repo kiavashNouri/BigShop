@@ -63,6 +63,8 @@
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <a href="{{url('/profile')}}" class="dropdown-item" >Profile</a>
+                                    <a href="{{url('/profile.')}}" class="dropdown-item" >احراز هویت دو مرحله ای</a>
+
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

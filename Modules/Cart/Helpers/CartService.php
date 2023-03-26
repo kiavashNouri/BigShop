@@ -30,6 +30,7 @@ class CartService
 //        dd($value);
 
         if (!is_null($obj) && $obj instanceof Model) {
+
             $value = array_merge($value, [
                 'id' => Str::random(10),
                 'subject_id' => $obj->id,
@@ -41,6 +42,7 @@ class CartService
                 'id' => Str::random(10)
             ]);
         }
+
 
         $this->cart['items'] = collect($this->cart['items'])->put($value['id'], $value);
 //                dd($this->cart);
@@ -54,7 +56,7 @@ class CartService
     public function update($key, $options)
     {
         $item = collect($this->get($key, false));
-
+//        dd($item);
         if (is_numeric($options)) {
             $item = $item->merge([
                 'quantity' => $item['quantity'] + $options
@@ -83,7 +85,6 @@ class CartService
 
 //            session()->put($this->name , $this->cart);
             Cookie::queue($this->name, $this->cart->toJson(), 60 * 24 * 7);
-
             return true;
         }
 

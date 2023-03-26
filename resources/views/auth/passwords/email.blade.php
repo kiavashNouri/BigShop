@@ -1,5 +1,7 @@
 @extends('layouts.app')
-
+@section('script')
+    <script src="https://www.google.com/recaptcha/api.js?hl=fa" async defer></script>
+@endsection
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -29,6 +31,9 @@
                                     </span>
                                 @enderror
                             </div>
+                        </div>
+                        <div class="form-group col-md-8 offset-md-4 mt-3">
+                            <div class="g-recaptcha @error('g-recaptcha-response') is-invalid @enderror"  data-sitekey={{'6LcW-JAhAAAAAL2KqCsy6xTKvfbTy3qDxDxdmi0X'}}></div>
                         </div>
 
                         <div class="row mb-0">

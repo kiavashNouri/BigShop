@@ -112,7 +112,7 @@
                 <div class="d-flex align-items-center justify-content-between">
                     <h4 class="mt-4">بخش نظرات</h4>
                     @auth
-                        <span class="btn btn-sm btn-primary" data-toggle="modal" data-target="#sendComment" data-id="0">ثبت نظر جدید</span>
+                        <span class="btn btn-sm btn-primary" data-toggle="modal" data-target="#sendComment" data-id="{{$comment->id}}">ثبت نظر جدید</span>
                     @endauth
                 </div>
 

@@ -68,6 +68,7 @@
                                            class="btn btn-sm btn-primary">ویرایش</a>
                                     @endcan
                                     @if($user->isStaffUser())
+{{--                                        @dd('yes')--}}
                                         @can('staff-user-permission')
                                             <a href="{{ route('admin.users.permissions' , $user->id) }}"
                                                class="btn btn-sm btn-warning">دسترسی ها</a>

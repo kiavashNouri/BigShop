@@ -23,12 +23,16 @@ trait TwoFactorAuthenticate
             if ($user->two_factor_type='sms'){
                 $code = ActiveCode::generateCode($user);
                 // Todo send sms
+//                dd($code);
+                $user->notify(new \App\Notifications\ActiveCode($code,$user->phone_number));
+
                 // دسترسی پیدا میکنیم به auth session (auth.using_sms) و برابر با true قرارش میدیم
                 $request->session()->push('auth.using_sms',true);
+
             }
             return redirect(route('2fa.token'));
         }
-        $user->notify(new LoginToWebsiteNotification());
+//        $user->notify(new LoginToWebsiteNotification());
         return false;
     }
 

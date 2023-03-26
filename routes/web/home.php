@@ -19,7 +19,6 @@ Route::get('/', function () {
 //       'code' =>111111,
 //        'expired_at'=>now()->addMinute(10)
 //    ]);
-    auth()->loginUsingId(1);
         return view('welcome');
 
 });

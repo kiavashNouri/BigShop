@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Notifications\Channels\GhasedakChannel;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -10,6 +11,7 @@ use Illuminate\Notifications\Notification;
 class ActiveCode extends Notification
 {
     public $code;
+    public $phone;
     use Queueable;
 
     /**
@@ -17,9 +19,12 @@ class ActiveCode extends Notification
      *
      * @return void
      */
-    public function __construct($code)
+    public function __construct($code,$phone)
     {
         $this->code = $code;
+        $this->phone = $phone;
+//        dd($this->phone);
+
     }
 
     /**
@@ -31,7 +36,17 @@ class ActiveCode extends Notification
     public function via($notifiable)
     {
 
-//        return [\GhasedakChannel::class];
+        return [GhasedakChannel::class];
+    }
+
+    public function toGhasedakSms($notifiable)
+    {
+
+        return [
+            'text'=>"$this->code",
+            'number'=>"$this->phone"
+        ];
+
     }
 
 }

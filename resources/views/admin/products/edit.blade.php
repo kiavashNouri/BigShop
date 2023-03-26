@@ -169,7 +169,7 @@
                         <div id="attribute_section">
                             @foreach($product->attributes as $attribute)
                                 <div class="row" id="attribute-{{ $loop->index }}">
-                                    <div class="col-5">
+                                     <div class="col-5">
                                         <div class="form-group">
                                             <label>عنوان ویژگی</label>
                                             <select name="attributes[{{ $loop->index }}][name]" onchange="changeAttributeValues(event, {{ $loop->index }});" class="attribute-select form-control">

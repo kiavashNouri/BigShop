@@ -33,15 +33,19 @@ class ProfileController extends Controller
             //و تلفنش هم توی جدول قرار داره،موقع آپددیت کردن و گذاشتن روی حالت off ارور نده که شماره تلفن وجود داره
             //در واقع واسه کاربر کنونی که آنلاینه اینو نادیده میگیره
 
+
+//
+
         ]);
 
         if ($data['type'] === 'sms') {
-            if ($request->user()->phone_number !== $data['phone']) {
-//                یعنی اگه وجود نداشت
+//            dd(Auth::user());
+            if (Auth::user()->phone_number !== $data['phone']) {
+//                یعنی اگه وجود نداشت یا عوض شد
                 $code = ActiveCode::generateCode(Auth::user());
 
 //                send code with notif(maybe sms or email or both of them)
-                $request->user()->notify(new \App\Notifications\ActiveCode($code));
+                Auth::user()->notify(new \App\Notifications\ActiveCode($code));
                 $request->session()->flash('phone', $data['phone']);
                 return redirect(route('show.phone.setting'));
             } else {

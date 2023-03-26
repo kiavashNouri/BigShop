@@ -61,6 +61,7 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
+//        $array=[0=>['name'=>'kia']];
         $validData = $request->validate([
             'title' => 'required',
             'description' => 'required',
@@ -83,7 +84,7 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
-//        return $product->attributes[0]->pivot->value;
+//        return $product->attributes[0]->pivot->value_id;
         return view('admin.products.edit', compact('product'));
     }
 

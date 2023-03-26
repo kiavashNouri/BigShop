@@ -21,3 +21,4 @@ class AttributeController extends Controller
         return response([ 'data' => $attr->values->pluck('value') ]);
     }
 }
+

@@ -16,7 +16,6 @@ if(! function_exists('isActive') ) {
 }
 
 if(! function_exists('isUrl') ) {
-
     function isUrl($url , $activeClassName = 'active') {
         return \request()->fullUrlIs($url) ? $activeClassName : '';
     }

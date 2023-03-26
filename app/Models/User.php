@@ -88,6 +88,8 @@ class User extends Authenticatable
     }
     public function hasRole($roles)
     {
+
+//        میگه بررسی کن که role های که دارای permission های کاربر هست شامل role های کاربر هست یا نه
         return !! $roles->intersect($this->roles)->all();
     }
     public function hasPermission($permission)
